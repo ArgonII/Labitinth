@@ -1293,6 +1293,8 @@ GameObject:
   - component: {fileID: 623955104}
   - component: {fileID: 623955103}
   - component: {fileID: 623955108}
+  - component: {fileID: 623955110}
+  - component: {fileID: 623955109}
   m_Layer: 0
   m_Name: Agent1
   m_TagString: Player
@@ -1434,8 +1436,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad2551b689fff419d2323cf77429f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentAI
-  moveSpeed: 3
-  turnSpeed: 5
+  bestPathsCount: 5
+--- !u!114 &623955109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623955102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b291a1211356404d9c47b510cc78d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContextSensor
+  viewAngle: 200
+  angleStep: 2
+  viewDistance: 5
+  turnPenalty: 0.25
+  sensorRadiusScale: 0.9
+  commitBonus: 1.5
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
   scoreGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -1446,8 +1468,8 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 19661
-    ctime1: 43253
+    ctime0: 0
+    ctime1: 32768
     ctime2: 65535
     ctime3: 0
     ctime4: 0
@@ -1462,23 +1484,26 @@ MonoBehaviour:
     atime5: 0
     atime6: 0
     atime7: 0
-    m_Mode: 1
-    m_ColorSpace: 0
+    m_Mode: 0
+    m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  viewAngle: 160
-  angleStep: 1
-  viewDistance: 5
-  turnPenalty: 0.02
-  sensorRadiusMultiplier: 0.5
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 64
-  visionMask:
-    serializedVersion: 2
-    m_Bits: 0
-  bestPathsCount: 5
-  player: {fileID: 865359053}
+  drawDebugRays: 1
+--- !u!114 &623955110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623955102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd67c8b76ecd9148b7c8e02ecb188e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AgentMotor
+  moveSpeed: 3
+  turnSpeed: 5
+  acceleration: 20
 --- !u!1 &660947203
 GameObject:
   m_ObjectHideFlags: 0
