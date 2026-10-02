@@ -1295,6 +1295,7 @@ GameObject:
   - component: {fileID: 623955108}
   - component: {fileID: 623955110}
   - component: {fileID: 623955109}
+  - component: {fileID: 623955111}
   m_Layer: 0
   m_Name: Agent1
   m_TagString: Player
@@ -1437,6 +1438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AgentAI
   bestPathsCount: 5
+  currentState: 0
+  searchDuration: 10
+  searchAreaRadius: 1
 --- !u!114 &623955109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1453,8 +1457,6 @@ MonoBehaviour:
   angleStep: 2
   viewDistance: 5
   turnPenalty: 0.25
-  sensorRadiusScale: 0.9
-  commitBonus: 1.5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1503,7 +1505,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AgentMotor
   moveSpeed: 3
   turnSpeed: 5
-  acceleration: 20
+--- !u!114 &623955111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623955102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4158aba6f4155a64cb55bb38ef7a8ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSensor
+  player: {fileID: 865359053}
+  viewDistance: 6
+  viewAngle: 160
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &660947203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,7 +2048,7 @@ Transform:
   m_GameObject: {fileID: 865359048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 0.6, z: -0.20507}
+  m_LocalPosition: {x: 3.35, y: 0.6, z: 1.16}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []

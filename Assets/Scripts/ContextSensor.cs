@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.InferenceEngine;
 using UnityEngine;
 
 public struct PathOption
@@ -54,7 +55,6 @@ public class ContextSensor : MonoBehaviour
 
         float halfAngle = viewAngle * 0.5f;
 
-        // Проверяем, заблокирован ли путь прямо перед агентом.
         bool isPathBlocked = Physics.CapsuleCast(
             point1,
             point2,
@@ -156,67 +156,29 @@ public class ContextSensor : MonoBehaviour
 
         Vector3 scale = transform.lossyScale;
 
-        Vector3 axis;
-        float axisScale;
-        float radiusScale;
-
-        // CapsuleCollider может быть направлен по X, Y или Z.
-        switch (capsule.direction)
-        {
-            case 0: // X
-                axis = transform.right;
-                axisScale = Mathf.Abs(scale.x);
-
-                radiusScale = Mathf.Max(
-                    Mathf.Abs(scale.y),
-                    Mathf.Abs(scale.z)
-                );
-                break;
-
-            case 2: // Z
-                axis = transform.forward;
-                axisScale = Mathf.Abs(scale.z);
-
-                radiusScale = Mathf.Max(
-                    Mathf.Abs(scale.x),
-                    Mathf.Abs(scale.y)
-                );
-                break;
-
-            default: // Y
-                axis = transform.up;
-                axisScale = Mathf.Abs(scale.y);
-
-                radiusScale = Mathf.Max(
-                    Mathf.Abs(scale.x),
-                    Mathf.Abs(scale.z)
-                );
-                break;
-        }
-
-        radius = capsule.radius * radiusScale;
+        radius =
+            capsule.radius *
+            Mathf.Max(
+                Mathf.Abs(scale.x),
+                Mathf.Abs(scale.z)
+            );
 
         float height =
-            capsule.height * axisScale;
+            capsule.height *
+            Mathf.Abs(scale.y);
 
-        // Высота капсулы физически не может быть меньше диаметра.
-        height = Mathf.Max(
-            height,
-            radius * 2f
-        );
-
-        // Расстояние от центра капсулы
-        // до центра верхней/нижней полусферы.
         float halfSegment =
-            height * 0.5f - radius;
+            Mathf.Max(
+                0f,
+                height * 0.5f - radius
+            );
 
         point1 =
-            center + axis * halfSegment;
+            center + transform.up * halfSegment;
 
         point2 =
-            center - axis * halfSegment;
+            center - transform.up * halfSegment;
     }
-
     private void DrawPath(
         Vector3 origin,
         Vector3 direction,
