@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum HunterState
@@ -19,7 +17,9 @@ public class AgentAI : MonoBehaviour
     [SerializeField] private int bestPathsCount = 5;
     [SerializeField] private HunterState currentState = HunterState.Wander;
     [SerializeField] private float searchDuration = 10f;
+    [SerializeField] private float searchAttractionWeight = 3f;
     [SerializeField] private float searchAreaRadius = 4f;
+    [SerializeField] private float safeDistance = 0.5f;
 
     private AgentMotor motor;
     private ContextSensor contextSensor;
@@ -71,11 +71,7 @@ public class AgentAI : MonoBehaviour
     }
     private Vector3 SelectChaseDirection()
     {
-        Vector3 toPlayer = playerSensor.PlayerPosition - transform.position;
-        toPlayer.y = 0f;
-        if (toPlayer.sqrMagnitude < 0.001f)
-            return Vector3.zero;
-        return toPlayer.normalized;
+        return SelectDirectionTowards(playerSensor.PlayerPosition);
     }
     private Vector3 SelectSearchDirection()
     {
@@ -92,7 +88,7 @@ public class AgentAI : MonoBehaviour
 
         if (!searchStarted)
         {
-            return directionToCenter;
+            return SelectDirectionTowards(lastSeenPlayerPosition);
         }
 
         List<PathOption> pathOptions =
@@ -110,7 +106,7 @@ public class AgentAI : MonoBehaviour
             );
 
             float attractionStrength =
-                distanceToCenter / searchAreaRadius;
+                distanceToCenter / searchAreaRadius * searchAttractionWeight;
 
             float attractionBonus =
                 alignment * attractionStrength;
@@ -120,7 +116,8 @@ public class AgentAI : MonoBehaviour
 
             pathOptions[i] = new PathOption(
                 path.Direction,
-                finalScore
+                finalScore,
+                path.FreeDistance
             );
         }
         return ChooseWeightedDirection(pathOptions);
@@ -128,8 +125,8 @@ public class AgentAI : MonoBehaviour
 
     private void UpdateState()
     {
-        bool CanSeePlayer = playerSensor.CanSeePlayer();
-        if (CanSeePlayer)
+        bool сanSeePlayer = playerSensor.CanSeePlayer();
+        if (сanSeePlayer)
         {
             objRenderer.material.color = Color.red;
             lastSeenPlayerPosition = playerSensor.PlayerPosition;
@@ -175,11 +172,37 @@ public class AgentAI : MonoBehaviour
         {
             return transform.forward;
         }
-        paths.Sort((a, b) => b.Score.CompareTo(a.Score));
 
-        int count = Mathf.Min(bestPathsCount, paths.Count);
+        List<PathOption> safePaths = new List<PathOption>();
 
-        float minScore = paths[count - 1].Score;
+        for (int i = 0; i < paths.Count; i++)
+        {
+            if (paths[i].FreeDistance >= safeDistance)
+            {
+                safePaths.Add(paths[i]);
+            }
+        }
+
+        if (safePaths.Count == 0)
+        {
+            PathOption safestPath = paths[0];
+
+            for (int i = 1; i < paths.Count; i++)
+            {
+                if (paths[i].FreeDistance > safestPath.FreeDistance)
+                {
+                    safestPath = paths[i];
+                }
+            }
+
+            return safestPath.Direction;
+        }
+
+        safePaths.Sort((a, b) => b.Score.CompareTo(a.Score));
+
+        int count = Mathf.Min(bestPathsCount, safePaths.Count);
+
+        float minScore = safePaths[count - 1].Score;
 
         float offset = minScore < 0f
             ? Mathf.Abs(minScore) + 0.1f
@@ -191,7 +214,7 @@ public class AgentAI : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            float weight = paths[i].Score + offset;
+            float weight = safePaths[i].Score + offset;
 
             weightsBuffer.Add(weight);
             totalWeight += weight;
@@ -201,7 +224,7 @@ public class AgentAI : MonoBehaviour
 
         float accumulatedWeight = 0f;
 
-        Vector3 chosenDirection = paths[0].Direction;
+        Vector3 chosenDirection = safePaths[0].Direction;
 
         for (int i = 0; i < count; i++)
         {
@@ -209,13 +232,51 @@ public class AgentAI : MonoBehaviour
 
             if (accumulatedWeight > randomValue)
             {
-                chosenDirection = paths[i].Direction;
+                chosenDirection = safePaths[i].Direction;
                 break;
             }
         }
 
         contextSensor.DrawChosenDirection(chosenDirection);
+        return safePaths[0].Direction;
+    }
+    private Vector3 SelectDirectionTowards(Vector3 targetPosition)
+    {
+        List<PathOption> paths = contextSensor.ScanEnvironment();
 
-        return chosenDirection;
+        if (paths.Count == 0)
+        {
+            return transform.forward;
+        }
+
+        Vector3 directionToTarget = targetPosition - transform.position;
+
+        directionToTarget.y = 0f;
+        directionToTarget.Normalize();
+
+        float bestAlignment = float.NegativeInfinity;
+        Vector3 bestDirection = transform.forward;
+
+        for (int i = 0; i < paths.Count; i++)
+        {
+            PathOption path = paths[i];
+
+            if (path.FreeDistance < safeDistance)
+            {
+                continue;
+            }
+
+            float alignment = Vector3.Dot(
+                path.Direction,
+                directionToTarget
+            );
+
+            if (alignment > bestAlignment)
+            {
+                bestAlignment = alignment;
+                bestDirection = paths[i].Direction;
+            }
+        }
+        return bestDirection;
     }
 }

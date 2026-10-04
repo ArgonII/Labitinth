@@ -56,12 +56,8 @@ public class AgentMotor : MonoBehaviour
         );
 
         float speedFactor =
-            Mathf.Clamp(
-                alignment,
-                0.2f,
-                1f
-            );
-
+            Mathf.Clamp01(alignment);
+        
         Vector3 newPosition =
             rb.position
             + transform.forward

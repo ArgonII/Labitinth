@@ -6,11 +6,13 @@ public struct PathOption
 {
     public Vector3 Direction;
     public float Score;
+    public float FreeDistance;
 
-    public PathOption(Vector3 direction, float score)
+    public PathOption(Vector3 direction, float score, float freeDistance)
     {
         Direction = direction;
         Score = score;
+        FreeDistance = freeDistance;
     }
 }
 
@@ -92,7 +94,8 @@ public class ContextSensor : MonoBehaviour
             paths.Add(
                 new PathOption(
                     direction,
-                    score
+                    score,
+                    freeDistance
                 )
             );
 
