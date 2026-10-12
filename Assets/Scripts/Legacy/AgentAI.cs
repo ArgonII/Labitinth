@@ -238,7 +238,7 @@ public class AgentAI : MonoBehaviour
         }
 
         contextSensor.DrawChosenDirection(chosenDirection);
-        return safePaths[0].Direction;
+        return chosenDirection;
     }
     private Vector3 SelectDirectionTowards(Vector3 targetPosition)
     {

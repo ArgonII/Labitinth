@@ -1440,7 +1440,9 @@ MonoBehaviour:
   bestPathsCount: 5
   currentState: 0
   searchDuration: 10
-  searchAreaRadius: 1
+  searchAttractionWeight: 2
+  searchAreaRadius: 2.5
+  safeDistance: 0.5
 --- !u!114 &623955109
 MonoBehaviour:
   m_ObjectHideFlags: 0
