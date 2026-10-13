@@ -38,7 +38,7 @@ public class ContextSensor : MonoBehaviour
 
     private readonly List<PathOption> paths =
         new List<PathOption>(360);
-
+    public float ViewDistance => viewDistance;
     private void Awake()
     {
         capsule = GetComponent<CapsuleCollider>();

@@ -26,8 +26,7 @@ public class AgentMotor : MonoBehaviour
         targetDirection.y = 0f;
         targetDirection.Normalize();
 
-        // Плавное сглаживание вектора движения во времени (чтобы не было резких скачков на 180 или 40 градусов за кадр)
-        float smoothFactor = 10f; // Чем выше, тем резче реакция
+        float smoothFactor = 10f;
         currentMoveDirection = Vector3.Slerp(currentMoveDirection, targetDirection, smoothFactor * Time.fixedDeltaTime);
         currentMoveDirection.Normalize();
 
@@ -52,7 +51,6 @@ public class AgentMotor : MonoBehaviour
     {
         float moveDistance = moveSpeed * Time.fixedDeltaTime;
 
-        // Свепим именно по направлению движения, а не по transform.forward
         if (rb.SweepTest(
             moveDirection,
             out RaycastHit hit,

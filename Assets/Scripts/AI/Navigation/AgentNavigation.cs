@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -97,6 +98,7 @@ public class AgentNavigation : MonoBehaviour
         contextSensor.DrawChosenDirection(chosenDirection);
         return chosenDirection;
     }
+    /*
     public Vector3 SelectDirectionTowards(Vector3 targetPosition)
     {
         List<PathOption> paths = contextSensor.ScanEnvironment();
@@ -109,7 +111,6 @@ public class AgentNavigation : MonoBehaviour
         Vector3 directionToTarget = targetPosition - transform.position;
         directionToTarget.y = 0f;
 
-        // Если цель прямо под агентом, останавливаемся или сохраняем текущее направление
         if (directionToTarget.sqrMagnitude < 0.001f)
         {
             return Vector3.zero;
@@ -120,7 +121,6 @@ public class AgentNavigation : MonoBehaviour
         float bestScore = float.NegativeInfinity;
         Vector3 bestDirection = transform.forward;
 
-        // Переменные для безопасного фоллбека, если все пути небезопасны
         float maxFreeDistance = float.NegativeInfinity;
         Vector3 safestFallbackDirection = transform.forward;
 
@@ -128,24 +128,19 @@ public class AgentNavigation : MonoBehaviour
         {
             PathOption path = paths[i];
 
-            // 1. Всегда ищем самый "просторный" путь на случай полного окружения
             if (path.FreeDistance > maxFreeDistance)
             {
                 maxFreeDistance = path.FreeDistance;
                 safestFallbackDirection = path.Direction;
             }
 
-            // 2. Жесткий отсев опасных путей
             if (path.FreeDistance < safeDistance)
             {
                 continue;
             }
 
-            // 3. Вычисляем совпадение с целью (от -1 до 1)
             float alignment = Vector3.Dot(path.Direction, directionToTarget);
 
-            // 4. Добавляем коэффициент свободного пространства для плавности (Context Steering)
-            // Чем больше свободного места, тем выше приоритет пути при прочих равных
             float distanceFactor = Mathf.Clamp01(path.FreeDistance / (safeDistance * 2f));
             float score = (alignment * 0.75f) + (distanceFactor * 0.25f);
 
@@ -156,13 +151,78 @@ public class AgentNavigation : MonoBehaviour
             }
         }
 
-        // Если ни один путь не прошел проверку безопасности (все < safeDistance)
         if (bestScore == float.NegativeInfinity)
         {
-            // Возвращаем наименее опасный (самый свободный) путь вместо слепого forward
             return safestFallbackDirection;
         }
 
         return bestDirection;
+    }
+    */
+
+    public Vector3 SelectDirectionAlignedWith(Vector3 desiredDirection)
+    {
+        List<PathOption> paths = contextSensor.ScanEnvironment();
+
+        if (paths == null || paths.Count == 0)
+        {
+            return transform.forward;
+        }
+
+        desiredDirection.y = 0f;
+
+        if (desiredDirection.sqrMagnitude > 0.0001f)
+        {
+            desiredDirection.Normalize();
+        }
+
+        float bestAlignment = float.NegativeInfinity;
+        Vector3 bestDirection = transform.forward;
+
+        bool foundSafePath = false;
+
+        PathOption safestPath = paths[0];
+
+        for (int i = 0; i < paths.Count; i++)
+        {
+            PathOption path = paths[i];
+
+            if (path.FreeDistance > safestPath.FreeDistance)
+            {
+                safestPath = path;
+            }
+
+            if (path.FreeDistance < safeDistance)
+            {
+                continue;
+            }
+
+            float alignment = Vector3.Dot(path.Direction, desiredDirection);
+
+            if (alignment > bestAlignment)
+            {
+                bestAlignment = alignment;
+                bestDirection = path.Direction;
+                foundSafePath = true;
+            }
+        }
+
+        if (foundSafePath)
+        {
+            return bestDirection;
+        }
+
+        return safestPath.Direction;
+    }
+
+    public Vector3 SelectDirectionTowards(Vector3 targetPosition)
+    {
+        Vector3 desiredDirection = targetPosition - transform.position;
+        return SelectDirectionAlignedWith(desiredDirection);
+    }
+    public Vector3 SelectDirectionAwayFrom(Vector3 targetPosition)
+    {
+        Vector3 desiredDirection = transform.position - targetPosition;
+        return SelectDirectionAlignedWith(desiredDirection);
     }
 }
