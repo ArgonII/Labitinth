@@ -1,0 +1,79 @@
+Date : 2026-10-16 01:52:32
+Directory : c:\Users\DeVur\My project (1)
+Total : 32 files,  2147 codes, 64 comments, 294 blanks, all 2505 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         26 |      1,490 |         64 |        282 |      1,836 |
+| JSON     |          2 |        581 |          0 |          2 |        583 |
+| UnityUSS |          3 |         72 |          0 |          9 |         81 |
+| XML      |          1 |          4 |          0 |          1 |          5 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                   |         32 |      2,147 |         64 |        294 |      2,505 |
+| . (Files)                                                                           |          1 |          4 |          0 |          1 |          5 |
+| Assets                                                                              |         29 |      1,562 |         64 |        291 |      1,917 |
+| Assets\Scripts                                                                      |         24 |      1,369 |         61 |        256 |      1,686 |
+| Assets\Scripts\AI                                                                   |         22 |      1,116 |         61 |        199 |      1,376 |
+| Assets\Scripts\AI\Core                                                              |          3 |         67 |          0 |          5 |         72 |
+| Assets\Scripts\AI\FSM                                                               |          2 |         16 |          0 |          6 |         22 |
+| Assets\Scripts\AI\HFSM                                                              |          3 |        201 |          0 |         41 |        242 |
+| Assets\Scripts\AI\Hunter                                                            |          1 |         96 |          0 |         11 |        107 |
+| Assets\Scripts\AI\Movement                                                          |          1 |         54 |          0 |         15 |         69 |
+| Assets\Scripts\AI\Navigation                                                        |          1 |        127 |         61 |         40 |        228 |
+| Assets\Scripts\AI\Runner                                                            |          1 |         73 |          0 |          9 |         82 |
+| Assets\Scripts\AI\Sensors                                                           |          2 |        237 |          0 |         44 |        281 |
+| Assets\Scripts\AI\States                                                            |          8 |        245 |          0 |         28 |        273 |
+| Assets\Scripts\Legacy                                                               |          1 |        232 |          0 |         51 |        283 |
+| Assets\Scripts\Player                                                               |          1 |         21 |          0 |          6 |         27 |
+| Assets\TutorialInfo                                                                 |          5 |        193 |          3 |         35 |        231 |
+| Assets\TutorialInfo (Files)                                                         |          1 |         18 |          0 |          3 |         21 |
+| Assets\TutorialInfo\Editor                                                          |          1 |        103 |          3 |         23 |        129 |
+| Assets\TutorialInfo\StyleSheets                                                     |          3 |         72 |          0 |          9 |         81 |
+| Packages                                                                            |          2 |        581 |          0 |          2 |        583 |
++-------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                            | language | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Core\AgentContext.cs                | C#       |         25 |          0 |          3 |         28 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Core\IState.cs                      | C#       |          6 |          0 |          0 |          6 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Core\StateMachine.cs                | C#       |         36 |          0 |          2 |         38 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\FSM\FSMStateMachine.cs              | C#       |         16 |          0 |          5 |         21 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\FSM\RunnerFSM.cs                    | C#       |          0 |          0 |          1 |          1 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\HFSM\HFSMStateMachine.cs            | C#       |         75 |          0 |         11 |         86 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\HFSM\HunterHFSM.cs                  | C#       |         35 |          0 |         11 |         46 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\HFSM\RunnerHFSM.cs                  | C#       |         91 |          0 |         19 |        110 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Hunter\HunterAI.cs                  | C#       |         96 |          0 |         11 |        107 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Movement\AgentMotor.cs              | C#       |         54 |          0 |         15 |         69 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Navigation\AgentNavigation.cs       | C#       |        127 |         61 |         40 |        228 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Runner\RunnerAI.cs                  | C#       |         73 |          0 |          9 |         82 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Sensors\ContextSensor.cs            | C#       |        191 |          0 |         36 |        227 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Sensors\PlayerSensor.cs             | C#       |         46 |          0 |          8 |         54 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\ChaseState.cs                | C#       |         17 |          0 |          2 |         19 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\FleeState.cs                 | C#       |         17 |          0 |          1 |         18 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\MoveFromLastSeenState.cs     | C#       |         38 |          0 |          2 |         40 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\MoveToLastSeenState.cs       | C#       |         15 |          0 |          1 |         16 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\ObserveState.cs              | C#       |         35 |          0 |          3 |         38 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\PatrolMoveState.cs           | C#       |         33 |          0 |          2 |         35 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\SearchState.cs               | C#       |         75 |          0 |         16 |         91 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\WanderState.cs               | C#       |         15 |          0 |          1 |         16 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\Legacy\AgentAI.cs                      | C#       |        232 |          0 |         51 |        283 |
+| c:\Users\DeVur\My project (1)\Assets\Scripts\Player\PlayerController.cs             | C#       |         21 |          0 |          6 |         27 |
+| c:\Users\DeVur\My project (1)\Assets\TutorialInfo\Editor\ReadmeEditor.cs            | C#       |        103 |          3 |         23 |        129 |
+| c:\Users\DeVur\My project (1)\Assets\TutorialInfo\Readme.cs                         | C#       |         18 |          0 |          3 |         21 |
+| c:\Users\DeVur\My project (1)\Assets\TutorialInfo\StyleSheets\ReadmeEditor.uss      | UnityUSS |         66 |          0 |          9 |         75 |
+| c:\Users\DeVur\My project (1)\Assets\TutorialInfo\StyleSheets\ReadmeEditorDark.uss  | UnityUSS |          3 |          0 |          0 |          3 |
+| c:\Users\DeVur\My project (1)\Assets\TutorialInfo\StyleSheets\ReadmeEditorLight.uss | UnityUSS |          3 |          0 |          0 |          3 |
+| c:\Users\DeVur\My project (1)\My project (1).slnx                                   | XML      |          4 |          0 |          1 |          5 |
+| c:\Users\DeVur\My project (1)\Packages\manifest.json                                | JSON     |         52 |          0 |          1 |         53 |
+| c:\Users\DeVur\My project (1)\Packages\packages-lock.json                           | JSON     |        529 |          0 |          1 |        530 |
+| Total                                                                               |          |      2,147 |         64 |        294 |      2,505 |
++-------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -1,0 +1,34 @@
+"filename", "language", "JSON", "XML", "C#", "UnityUSS", "comment", "blank", "total"
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Core\AgentContext.cs", "C#", 0, 0, 25, 0, 0, 3, 28
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Core\IState.cs", "C#", 0, 0, 6, 0, 0, 0, 6
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Core\StateMachine.cs", "C#", 0, 0, 36, 0, 0, 2, 38
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\FSM\FSMStateMachine.cs", "C#", 0, 0, 16, 0, 0, 5, 21
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\FSM\RunnerFSM.cs", "C#", 0, 0, 0, 0, 0, 1, 1
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\HFSM\HFSMStateMachine.cs", "C#", 0, 0, 75, 0, 0, 11, 86
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\HFSM\HunterHFSM.cs", "C#", 0, 0, 35, 0, 0, 11, 46
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\HFSM\RunnerHFSM.cs", "C#", 0, 0, 91, 0, 0, 19, 110
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Hunter\HunterAI.cs", "C#", 0, 0, 96, 0, 0, 11, 107
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Movement\AgentMotor.cs", "C#", 0, 0, 54, 0, 0, 15, 69
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Navigation\AgentNavigation.cs", "C#", 0, 0, 127, 0, 61, 40, 228
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Runner\RunnerAI.cs", "C#", 0, 0, 73, 0, 0, 9, 82
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Sensors\ContextSensor.cs", "C#", 0, 0, 191, 0, 0, 36, 227
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\Sensors\PlayerSensor.cs", "C#", 0, 0, 46, 0, 0, 8, 54
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\ChaseState.cs", "C#", 0, 0, 17, 0, 0, 2, 19
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\FleeState.cs", "C#", 0, 0, 17, 0, 0, 1, 18
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\MoveFromLastSeenState.cs", "C#", 0, 0, 38, 0, 0, 2, 40
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\MoveToLastSeenState.cs", "C#", 0, 0, 15, 0, 0, 1, 16
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\ObserveState.cs", "C#", 0, 0, 35, 0, 0, 3, 38
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\PatrolMoveState.cs", "C#", 0, 0, 33, 0, 0, 2, 35
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\SearchState.cs", "C#", 0, 0, 75, 0, 0, 16, 91
+"c:\Users\DeVur\My project (1)\Assets\Scripts\AI\States\WanderState.cs", "C#", 0, 0, 15, 0, 0, 1, 16
+"c:\Users\DeVur\My project (1)\Assets\Scripts\Legacy\AgentAI.cs", "C#", 0, 0, 232, 0, 0, 51, 283
+"c:\Users\DeVur\My project (1)\Assets\Scripts\Player\PlayerController.cs", "C#", 0, 0, 21, 0, 0, 6, 27
+"c:\Users\DeVur\My project (1)\Assets\TutorialInfo\Editor\ReadmeEditor.cs", "C#", 0, 0, 103, 0, 3, 23, 129
+"c:\Users\DeVur\My project (1)\Assets\TutorialInfo\Readme.cs", "C#", 0, 0, 18, 0, 0, 3, 21
+"c:\Users\DeVur\My project (1)\Assets\TutorialInfo\StyleSheets\ReadmeEditor.uss", "UnityUSS", 0, 0, 0, 66, 0, 9, 75
+"c:\Users\DeVur\My project (1)\Assets\TutorialInfo\StyleSheets\ReadmeEditorDark.uss", "UnityUSS", 0, 0, 0, 3, 0, 0, 3
+"c:\Users\DeVur\My project (1)\Assets\TutorialInfo\StyleSheets\ReadmeEditorLight.uss", "UnityUSS", 0, 0, 0, 3, 0, 0, 3
+"c:\Users\DeVur\My project (1)\My project (1).slnx", "XML", 0, 4, 0, 0, 0, 1, 5
+"c:\Users\DeVur\My project (1)\Packages\manifest.json", "JSON", 52, 0, 0, 0, 0, 1, 53
+"c:\Users\DeVur\My project (1)\Packages\packages-lock.json", "JSON", 529, 0, 0, 0, 0, 1, 530
+"Total", "-", 581, 4, 1490, 72, 64, 294, 2505

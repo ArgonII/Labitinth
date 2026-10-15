@@ -1,9 +1,9 @@
-using UnityEngine;
 
-public class FleeState : IState
+using UnityEngine;
+public class ChaseState : IState
 {
     private readonly AgentContext context;
-    public FleeState(
+    public ChaseState(
         AgentContext context)
     {
         this.context = context;
@@ -13,7 +13,7 @@ public class FleeState : IState
     public void Tick()
     {
         Vector3 playerPosition = context.PlayerSensor.PlayerPosition;
-        context.DesiredDirection = context.Navigation.SelectDirectionAwayFrom(playerPosition);
+        context.DesiredDirection = context.Navigation.SelectDirectionTowards(playerPosition);
     }
     public void Exit(){}
 }

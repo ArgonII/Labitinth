@@ -1,5 +1,4 @@
 using UnityEngine;
-
 [RequireComponent(typeof(AgentMotor))]
 [RequireComponent(typeof(ContextSensor))]
 [RequireComponent(typeof(PlayerSensor))]
