@@ -15,21 +15,28 @@ public class HunterHFSM : MonoBehaviour
     [SerializeField] private float searchDuration = 15f;
     [SerializeField] private float searchAttractionWeight = 3f;
     [SerializeField] private float searchAreaRadius = 12f;
+
+    [Header("Aggressive")]
+    [SerializeField] private float alertDuration = 0.7f;
     private AgentContext context;
 
     private HFSMStateMachine rootMachine;
     private HFSMStateMachine patrolMachine;
     private HFSMStateMachine searchingMachine;
+    private HFSMStateMachine aggressiveMachine;
+
 
     private MoveState moveState;
     private ObserveState observeState;
     private ChaseState chaseState;
     private MoveToLastSeenState moveToLastSeenState;
     private SearchState searchState;
-
+    private AlertState alertState;
 
     private void Awake()
     {
+        Renderer hunterRenderer = GetComponentInChildren<Renderer>();
+
         AgentMotor motor = GetComponent<AgentMotor>();
         ContextSensor contextSensor = GetComponent<ContextSensor>();
         PlayerSensor playerSensor = GetComponent<PlayerSensor>();
@@ -43,11 +50,14 @@ public class HunterHFSM : MonoBehaviour
             navigation
         );
         patrolMachine = new HFSMStateMachine();
+        aggressiveMachine = new HFSMStateMachine();
         searchingMachine = new HFSMStateMachine();
 
 
         moveState = new MoveState(context, moveDuration);
         observeState = new ObserveState(context, observeDuration);
+        alertState = new AlertState(context, hunterRenderer, alertDuration);
+        chaseState = new ChaseState(context);
         chaseState = new ChaseState(context);
         searchState = new SearchState(
             context,
@@ -59,6 +69,7 @@ public class HunterHFSM : MonoBehaviour
         rootMachine = new HFSMStateMachine();
 
         patrolMachine.SetInitialState(moveState);
+        aggressiveMachine.SetInitialState(alertState);
         searchingMachine.SetInitialState(moveToLastSeenState);
 
         rootMachine.SetInitialState(patrolMachine);
@@ -75,6 +86,12 @@ public class HunterHFSM : MonoBehaviour
             () => observeState.isFinished
         );
 
+        aggressiveMachine.AddTransition(
+            alertState,
+            chaseState,
+            () => alertState.IsFinished
+        );
+
         searchingMachine.AddTransition(
             moveToLastSeenState,
             searchState,
@@ -83,19 +100,19 @@ public class HunterHFSM : MonoBehaviour
 
         rootMachine.AddTransition(
             patrolMachine,
-            chaseState,
+            aggressiveMachine,
             () => context.PlayerSensor.CanSeePlayer()
         );
 
         rootMachine.AddTransition(
-            chaseState,
+            aggressiveMachine,
             searchingMachine,
             () => !context.PlayerSensor.CanSeePlayer()
         );
 
         rootMachine.AddTransition(
             searchingMachine,
-            chaseState,
+            aggressiveMachine,
             () => context.PlayerSensor.CanSeePlayer()
         );
 
