@@ -10,9 +10,18 @@ public class HunterAI : MonoBehaviour
     [SerializeField] private float searchDuration = 10f;
     [SerializeField] private float searchAttractionWeight = 3f;
     [SerializeField] private float searchAreaRadius = 4f;
+
+    [Header("Patrol")]
+    [SerializeField] private float moveDuration = 5f;
+    [SerializeField] private float observeDuration = 2f;
+
+    [Header("Aggressive")]
+    [SerializeField] private float alertDuration = 0.7f;
     private AgentContext context;
     private StateMachine stateMachine;
-    private WanderState wanderState;
+    private MoveState moveState;
+    private ObserveState observeState;
+    private AlertState alertState;
     private SearchState searchState;
     private ChaseState chaseState;
     private MoveToLastSeenState moveToLastSeenState;
@@ -37,7 +46,14 @@ public class HunterAI : MonoBehaviour
 
         stateMachine = new StateMachine();
 
-        wanderState = new WanderState(context);
+        moveState = new MoveState(context, moveDuration);
+        observeState = new ObserveState(context, observeDuration);
+
+        alertState = new AlertState(
+            context,
+            objRenderer,
+            alertDuration
+        );
 
         searchState = new SearchState(
             context,
@@ -51,7 +67,7 @@ public class HunterAI : MonoBehaviour
     }
     private void Start()
     {
-        stateMachine.ChangeState(wanderState);
+        stateMachine.ChangeState(moveState);
     }
     private void Update()
     {
@@ -71,37 +87,84 @@ public class HunterAI : MonoBehaviour
         if (canSeePlayer)
         {
             context.LastSeenPlayerPosition = context.PlayerSensor.PlayerPosition;
-            stateMachine.ChangeState(chaseState);
-            objRenderer.material.color = Color.red;
-            return;
+        }
+        if (stateMachine.CurrentState == moveState)
+        {
+            if (canSeePlayer)
+            {
+                stateMachine.ChangeState(alertState);
+                return;
+            }
+
+            if (moveState.isFinished)
+            {
+                stateMachine.ChangeState(observeState);
+                return;
+            }
+        }
+        if (stateMachine.CurrentState == observeState)
+        {
+            if (canSeePlayer)
+            {
+                stateMachine.ChangeState(alertState);
+                return;
+            }
+
+            if (observeState.isFinished)
+            {
+                stateMachine.ChangeState(moveState);
+                return;
+            }
+        }
+        if (stateMachine.CurrentState == alertState)
+        {
+            if (!canSeePlayer)
+            {
+                stateMachine.ChangeState(moveToLastSeenState);
+                return;
+            }
+
+            if (alertState.IsFinished)
+            {
+                stateMachine.ChangeState(chaseState);
+                return;
+            }
         }
         if (stateMachine.CurrentState == chaseState)
         {
-            stateMachine.ChangeState(moveToLastSeenState);
-            objRenderer.material.color = Color.yellow;
-            return;
+            if (!canSeePlayer)
+            {
+                stateMachine.ChangeState(moveToLastSeenState);
+                return;
+            }
         }
-        if (stateMachine.CurrentState == moveToLastSeenState && ReachedLastSeenPosition())
+        if (stateMachine.CurrentState == moveToLastSeenState)
         {
-            stateMachine.ChangeState(searchState);
-            objRenderer.material.color = Color.blue;
-            return;
-        }
-        if (stateMachine.CurrentState == searchState && searchState.IsFinished)
-        {
-            objRenderer.material.color = Color.green;
-            stateMachine.ChangeState(wanderState);
-        }
-        return;
-    }
-    private bool ReachedLastSeenPosition()
-    {
-        float distance =
-            Vector3.Distance(
-                context.Transform.position,
-                context.LastSeenPlayerPosition
-            );
+            if (canSeePlayer)
+            {
+                stateMachine.ChangeState(alertState);
+                return;
+            }
 
-        return distance <= searchAreaRadius;
+            if (moveToLastSeenState.IsFinished)
+            {
+                stateMachine.ChangeState(searchState);
+                return;
+            }
+        }
+        if (stateMachine.CurrentState == searchState)
+        {
+            if (canSeePlayer)
+            {
+                stateMachine.ChangeState(alertState);
+                return;
+            }
+
+            if (searchState.IsFinished)
+            {
+                stateMachine.ChangeState(moveState);
+                return;
+            }
+        }
     }
 }
